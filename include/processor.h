@@ -5,8 +5,10 @@ class Processor {
  public:
   float Utilization();  // TODO: See src/processor.cpp
 
-  // TODO: Declare any necessary private members
+  // Done : Declare any necessary private members
  private:
+ float previous_act_cpu_{0};
+ float prevous_tot_cpu_{0};
 };
 
 #endif
