@@ -174,9 +174,20 @@ long LinuxParser::ActiveJiffies()
 // Done: Read and return the number of idle jiffies for the system
 long LinuxParser::IdleJiffies() 
 { 
-  vector<string> total_jiffies = LinuxParser::CpuUtilization();
-  long idle_jiffies = std::stol(total_jiffies[3]) + std::stol(total_jiffies[4]);
-  return idle_jiffies;
+   	string cpu;
+  	string line;
+  	long kuser;
+  	long knice;
+  	long ksystem;
+  	long kidle;
+  	long kiowait;
+  	std::ifstream stream(kProcDirectory + kVersionFilename);
+  	if (stream.is_open()) {
+      	std::getline(stream, line);
+      	std::istringstream linestream(line);
+      	linestream >> cpu >>kuser >> knice >> ksystem >> kidle >> kiowait; 
+    }
+  	return kidle + kiowait; 
 }
 
 // Done: Read and return CPU utilization
