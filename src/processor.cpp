@@ -7,7 +7,11 @@ using namespace std;
 // DOne: Return the aggregate CPU utilization
 float Processor::Utilization() 
 {
-return LinuxParser::ActiveJiffies() / (LinuxParser::ActiveJiffies() + LinuxParser::IdleJiffies());
+  vector<string> util = LinuxParser::CpuUtilization();
+  float tot = 0;
+  float act = std::stof(util[0]) + std::stof(util[1]) + std::stof(util[2]);
+  for (auto i : util) tot = tot + std::stof(i);
 
+  return (act / tot);
   
-}
+} 

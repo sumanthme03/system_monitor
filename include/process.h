@@ -21,8 +21,20 @@ class Process {
 
   //completed: Declare any necessary private members
  private:
+  
  int pid_;
- float cpuutil_;
+ float cpuutil_ ;
+ float CpuUtilization_;
+  float preIdle_ = 0;
+  float preTotal_ = 0;
+  float preNonIdle_ = 0;
+  float preIOWait_ = 0;
+  float preUser_ = 0;
+  float preNice_ = 0;
+  float preSystem_ = 0;
+  float preIRQ_ = 0;
+  float preSoftIRQ_ = 0;
+  float preSteal_ = 0;
 };
 
 #endif

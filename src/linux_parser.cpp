@@ -193,25 +193,21 @@ long LinuxParser::IdleJiffies()
 // Done: Read and return CPU utilization
 vector<string> LinuxParser::CpuUtilization() 
 { 
-  	vector<string> val_cpu;
-  	string val1, val2, val3, val4, val5, val6, val7, val8, val9, val10;
-  	string key;
-  	string line;
-  	std::ifstream stream(kProcDirectory + kVersionFilename);
-  	if (stream.is_open()) 
-	{
-      	std::getline(stream, line);
-      	std::istringstream linestream(line);
-        while(linestream >> key >> val1>> val2>> val3>> val4>> val5>> val6>> val7>> val8>> val9>> val10)
-		{
-          	if(key == "cpu")
-			{
-          		val_cpu.push_back(val1); val_cpu.push_back(val2); val_cpu.push_back(val3); val_cpu.push_back(val4); val_cpu.push_back(val5);
-              	val_cpu.push_back(val6); val_cpu.push_back(val7); val_cpu.push_back(val8); val_cpu.push_back(val9); val_cpu.push_back(val10);
-            }
-    	}
+  string line, val, key;
+  vector<string> values;
+  std::ifstream stream(kProcDirectory + kStatFilename);
+  if (stream.is_open()) {
+    getline(stream, line);
+    std::istringstream linestream(line);
+    linestream >> key;
+    while (linestream >> val) {
+      values.emplace_back(val);
     }
-  	return val_cpu; 
+    stream.close();
+    return values;
+  }
+
+  return {};
 }
 
 // Done: Read and return the total number of processes
